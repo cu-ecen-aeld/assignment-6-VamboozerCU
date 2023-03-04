@@ -37,7 +37,7 @@ do_configure () {
 }
 
 do_compile () {
-	#oe_runmake CC="${CC}" CFLAGS="${CFLAGS}" INCLUDES="${INCLUDES}" LDFLAGS="${LDFLAGS}"
+	# oe_runmake CC="${CC}" CFLAGS="${CFLAGS}" INCLUDES="${INCLUDES}" LDFLAGS="${LDFLAGS}"
 	oe_runmake
 }
 
