@@ -25,7 +25,7 @@ SRC_URI = "git://git@github.com/cu-ecen-aeld/assignment-7-VamboozerCU.git;protoc
 
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
-SRCREV = "d78a6a1432e03ce1e83a9d52bc137970f1539e89"
+SRCREV = "4126ce4bb910b46d442322db49722f225c7c9c59"
 
 S = "${WORKDIR}/git/misc-modules"
 
