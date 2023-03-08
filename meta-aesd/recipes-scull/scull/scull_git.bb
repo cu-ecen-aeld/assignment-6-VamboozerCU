@@ -27,7 +27,7 @@ SRC_URI = "git://git@github.com/cu-ecen-aeld/assignment-7-VamboozerCU.git;protoc
 
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
-SRCREV = "fc589caa42155e3e6051fd0a5591e9a73f39a372"
+SRCREV = "d78a6a1432e03ce1e83a9d52bc137970f1539e89"
 
 S = "${WORKDIR}/git/scull"
 
@@ -52,7 +52,7 @@ FILES:${PN} += "${bindir}/scull_load \
                 ${sysconfdir}/init.d \
                "
 
-#MODULE_EXTRA_DEPENDENCIES += "/lib/modules/${KERNEL_VERSION}/extra"
+#MODULE_EXTRA_DEPENDENCIES += "/lib/modules/${KERNEL_VERSION}/..."
 
 #do_configure () {
 #	:
@@ -83,6 +83,3 @@ do_install () {
     #install -d ${D}/etc/udev/rules.d
     #install -m 0644 ${WORKDIR}/scull.rules ${D}/etc/udev/rules.d
 }
-
-#PACKAGES = "${PN}"
-#FILES_${PN} += "${libdir}/modules/${KERNEL_VERSION}/kernel/drivers/scull/scull.ko"

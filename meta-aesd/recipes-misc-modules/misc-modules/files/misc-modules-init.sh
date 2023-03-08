@@ -17,7 +17,8 @@ case "$1" in
      lsmod
      echo "Loading $MODULE_HELLO module..."
      #load_device
-     if modprobe $MODULE_HELLO ; then
+     modprobe $MODULE_HELLO
+     if [ "$(lsmod | grep $MODULE_HELLO)" ]; then
         echo "Module $MODULE_HELLO loaded successfully."
      else
         echo "Failed to load module $MODULE_HELLO."
@@ -25,17 +26,21 @@ case "$1" in
      fi
 
      echo "Loading $MODULE_FAULTY module..."
-     if /usr/bin/module_load $MODULE_FAULTY ; then
+     /usr/bin/module_load $MODULE_FAULTY
+     if [ "$(lsmod | grep $MODULE_FAULTY)" ]; then
         echo "Module $MODULE_FAULTY loaded successfully."
      else
         echo "Failed to load module $MODULE_FAULTY."
         #exit 1
      fi
+     lsmod
      ;;
   stop)
+     lsmod
      echo "Unloading $MODULE_HELLO module..."
      #unload_device
-     if rmmod $MODULE_HELLO ; then
+     rmmod $MODULE_HELLO
+     if ! [ "$(lsmod | grep $MODULE_HELLO)" ]; then
         echo "Module $MODULE_HELLO unloaded successfully."
      else
         echo "Failed to unload module $MODULE_HELLO."
@@ -43,14 +48,17 @@ case "$1" in
      fi
 
      echo "Unloading $MODULE_FAULTY module..."
-     if /usr/bin/module_unload $MODULE_FAULTY  ; then
+     /usr/bin/module_unload $MODULE_FAULTY
+     if ! [ "$(lsmod | grep $MODULE_FAULTY)" ]; then
         echo "Module $MODULE_FAULTY unloaded successfully."
      else
         echo "Failed to unload module $MODULE_FAULTY."
         #exit 1
      fi
+     lsmod
      ;;
   force-reload|restart)
+     lsmod
      echo "Reloading $MODULE_HELLO module..."
      #unload_device
      #load_device
@@ -70,6 +78,7 @@ case "$1" in
         echo "Failed to reload module $MODULE_FAULTY."
         #exit 1
      fi
+     lsmod
      ;;
   *)
      echo "Usage: $0 {start|stop|restart|force-reload}"

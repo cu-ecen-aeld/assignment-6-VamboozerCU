@@ -15,7 +15,8 @@ case "$1" in
   start)
      echo "Loading $MODULE module..."
      #load_device
-     if /usr/bin/scull_load ; then
+     /usr/bin/scull_load
+     if [ "$(lsmod | grep $MODULE)" ]; then
         echo "Module $MODULE loaded successfully."
      else
         echo "Failed to load module $MODULE."
@@ -26,12 +27,14 @@ case "$1" in
   stop)
      echo "Unloading $MODULE module..."
      #unload_device
-     if /usr/bin/scull_unload ; then
+     /usr/bin/scull_unload
+     if ! [ "$(lsmod | grep $MODULE)" ]; then
         echo "Module $MODULE unloaded successfully."
      else
         echo "Failed to unload module $MODULE."
         #exit 1
      fi
+     lsmod
      ;;
   force-reload|restart)
      echo "Reloading $MODULE module..."
@@ -43,6 +46,7 @@ case "$1" in
         echo "Failed to reload module $MODULE."
         #exit 1
      fi
+     lsmod
      ;;
   *)
      echo "Usage: $0 {start|stop|restart|force-reload}"
