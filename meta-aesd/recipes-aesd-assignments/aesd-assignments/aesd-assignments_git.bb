@@ -35,8 +35,14 @@ inherit update-rc.d
 INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME:${PN} = "aesdsocket-start-stop"
 
-RPROVIDES:${PN} += "kernel-module-aesdchar"
+#RPROVIDES:${PN} += "kernel-module-aesdchar"
+RPROVIDES:${PN} += "kernel-module-aesd-assignments"
 KERNEL_MODULE_AUTOLOAD += "aesdchar"
+
+FILES:${PN} += "${bindir}/aesdchar_load \
+                ${bindir}/aesdchar_unload \
+                ${sysconfdir}/init.d \
+               "
 
 do_configure () {
 	:
@@ -60,8 +66,8 @@ do_install () {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${S}/server/aesdsocket-start-stop.sh ${D}${sysconfdir}/init.d/aesdsocket-start-stop
 
-    #install -m 0755 ${S}/aesdchar_load ${D}${bindir}/aesdchar_load
-	#install -m 0755 ${S}/aesdchar_unload ${D}${bindir}/aesdchar_unload
+    install -m 0755 ${S}/aesd-char-driver/aesdchar_load ${D}${bindir}/aesdchar_load
+	install -m 0755 ${S}/aesd-char-driver/aesdchar_unload ${D}${bindir}/aesdchar_unload
 
 	install -d ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/aesdchar
     install -m 0644 ${S}/aesd-char-driver/aesdchar.ko ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/aesdchar
